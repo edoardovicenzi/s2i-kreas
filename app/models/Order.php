@@ -24,6 +24,7 @@ class Order
     {
         //Sanitize input
 
+        $this->destination_country = strtolower($this->destination_country);
         $this->destination_country = htmlspecialchars($this->destination_country);
 
         //prepare query
@@ -81,6 +82,7 @@ class Order
         //Sanitize input
 
         $this->id = htmlspecialchars($this->id);
+        $this->destination_country = strtolower($this->destination_country);
         $this->destination_country = htmlspecialchars($this->destination_country);
         $this->sold_on = htmlspecialchars($this->sold_on);
 

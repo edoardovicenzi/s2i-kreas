@@ -33,7 +33,7 @@ $response = array();
 
 $resource = getDetailResourceURI($uri);
 
-//This endpoint will read and write on the link table "tblOrderProducts"
+//This endpoint will read aggregate functions from the "viewOrderProducts" view
 try {
     switch ($method) {
 
@@ -43,7 +43,6 @@ try {
             //Get all entries for "/totalco2"
             if (count($resource) == 0) {
                 $results = $uow::$totalCO2->getAll();
-
                 $response['data'] = $results;
             } else {
                 throw new CustomHttpException("Unsupported endpoint try '/totalco2'", 400);
