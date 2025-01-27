@@ -19,7 +19,9 @@ There are 2 ways to make this work:
 1. With docker
 
 `git clone https://github.com/edoardovicenzi/s2i-kreas.git`
+
 `cd s2i-kreas`
+
 `docker compose up -d`
 
 2. Without docker
@@ -58,6 +60,7 @@ For example:
 `GET /products`
 
 Will result in:
+
 `Status 202`
 ```json
 {
@@ -81,6 +84,7 @@ Will result in:
 }
 ```
 If no products are found:
+
 `Status 404`
 ```json
 {
@@ -114,6 +118,7 @@ With json body:
 ```
 
 Will result in:
+
 `Status 202`
 ```json
 {
@@ -140,6 +145,7 @@ For example:
 `GET /products/1`
 
 Will result in:
+
 `Status 202`
 ```json
 {
@@ -151,6 +157,7 @@ Will result in:
 }
 ```
 If no products are found:
+
 `Status 404`
 ```json
 {
@@ -182,6 +189,7 @@ With json body:
 ```
 
 Will result in:
+
 `Status 200`
 ```json
 {
@@ -195,6 +203,7 @@ Will result in:
 ```
 
 If the resource does not exist it will be created. The response will be:
+
 `Status 201`
 ```json
 {
@@ -220,6 +229,7 @@ For example:
 `DELETE /products/38`
 
 Will result in:
+
 `Status 200`
 ```json
 {
@@ -233,6 +243,7 @@ Will result in:
 ```
 
 If the resource was already deleted the response will be:
+
 `Status 404`
 ```json
 {
@@ -267,6 +278,7 @@ For example:
 `GET /orders`
 
 Will result in:
+
 `Status 202`
 ```json
 {
@@ -313,6 +325,7 @@ Will result in:
 }
 ```
 If no products are found:
+
 `Status 404`
 ```json
 {
@@ -349,6 +362,7 @@ With json body:
 ```
 
 Will result in:
+
 `Status 202`
 ```json
 {
@@ -382,6 +396,7 @@ For example:
 `GET /orders/96`
 
 Will result in:
+
 `Status 202`
 ```json
 {
@@ -413,6 +428,7 @@ Will result in:
 }
 ```
 If no products are found:
+
 `Status 404`
 ```json
 {
@@ -450,6 +466,7 @@ With json body:
 ```
 
 Will result in:
+
 `Status 200`
 ```json
 {
@@ -482,6 +499,7 @@ Will result in:
 ```
 
 If the resource does not exist it will be created. The response will be:
+
 `Status 201`
 ```json
 {
@@ -519,6 +537,7 @@ For example:
 `DELETE /products/96`
 
 Will result in:
+
 `Status 200`
 ```json
 {
@@ -540,6 +559,7 @@ Will result in:
 ```
 
 If the resource was already deleted the response will be:
+
 `Status 404`
 ```json
 {
@@ -556,6 +576,7 @@ For example:
 `GET /orders/94/products`
 
 Will result in:
+
 `Status 202`
 ```json
 {
@@ -586,6 +607,7 @@ Example 2:
 `GET /orders/94/destination_country`
 
 Will result in:
+
 `Status 202`
 ```json
 {
@@ -611,6 +633,7 @@ For example:
 `GET /totalco2`
 
 Will result in:
+
 `Status 202`
 ```json
 {
@@ -620,6 +643,7 @@ Will result in:
 }
 ```
 A failed request returns:
+
 `Status 400`
 ```json
 {
@@ -631,6 +655,7 @@ Example 2:
 `GET /totalco2?from=2025-01-01&pid=1&country=usa&to=2025-01-27`
 
 Will result in:
+
 `Status 202`
 ```json
 {
