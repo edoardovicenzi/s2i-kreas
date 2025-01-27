@@ -41,6 +41,9 @@ try {
                     //remove unwanted quantity
                     unset($product->quantity);
                 }
+                if (!$results) {
+                    throw new CustomHttpException("No product found", 404);
+                }
                 $response['data'] = $results;
             }
             //Get a specific entry for "/products/:id"

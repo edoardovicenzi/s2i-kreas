@@ -47,7 +47,7 @@ try {
 
                 //Check for empty set
                 if (count($results) == 0) {
-                    throw new CustomHttpException("Resource not found", 404);
+                    throw new CustomHttpException("No orders found", 404);
                 }
                 $formattedList = $uow::$orderProducts::formatGetAll($results);
                 $response['data'] = $formattedList;
@@ -65,10 +65,10 @@ try {
 
                 //Check for empty set
                 if (!$results) {
-                    throw new CustomHttpException("Resource not found", 404);
+                    throw new CustomHttpException("Order not found", 404);
                 }
 
-                //Select the specified resource
+                //If user wants to access a specific property then return it
                 if (count($resource) > 1) {
                     // remove first element which is the id
                     array_shift($resource);
@@ -250,7 +250,11 @@ try {
             //Only perform the action for "/orders/:id"
             http_response_code(200);
             if (count($resource) > 0) {
-                $response['data'] = $uow::$order->deleteById($resource[0]);
+                //Save the response first
+                $response['data'] = $uow::$orderProducts->getByOrderId($resource[0]);;
+
+                //delete just the order (OrderProducts will cascade)
+                $uow::$order->deleteById($resource[0]);
                 $response['message'] = 'Order was deleted successfully';
             }
             break;

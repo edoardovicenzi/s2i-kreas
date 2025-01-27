@@ -1,7 +1,8 @@
 <?php
 
-require_once(__DIR__ . "/../DTO/DTOOrderProduct.php");
-require_once(__DIR__ . "/../DTO/DTOProduct.php");
+require_once(__DIR__ . "/" . "../DTO/DTOOrderProduct.php");
+require_once(__DIR__ . "/" . "../DTO/DTOProduct.php");
+require_once(__DIR__ . "/" . "../utility/CustomExceptions.php");
 
 class TotalCO2
 {
@@ -18,48 +19,59 @@ class TotalCO2
 
 
     //Read
-    public function getAll()
+    public function getTotal()
     {
         $query = "SELECT SUM(saved_co2) as saved_co2 FROM " . $this->view_name;
 
         $existingParameters = parseQueryStringParameters();
-
-        If (count($existingParameters) > 0){
-        $query = $query . " WHERE ";
-
         $parametersToSQL = array();
-        foreach ($existingParameters as $key => $value){
-            switch ($key) {
-            case 'from':
-                array_push($parametersToSQL, "sold_on > :$key");
-                break;
-            case 'to':
-                array_push($parametersToSQL, "sold_on < :$key");
-                break;
-            case 'country':
-                array_push($parametersToSQL, "destination_country = :$key");
-                break;
-            case 'pid':
-                array_push($parametersToSQL, "product_id = :$key");
-                break;
+        $bindParameter = array();
 
-            default:
-                //Not recognized = skip to next key
-                continue 2;
-                break;
+        if (count($existingParameters) > 0) {
+
+            foreach ($existingParameters as $key => $value) {
+                switch ($key) {
+                    case 'from':
+                        array_push($parametersToSQL, "sold_on > :$key");
+                        $bindParameter[$key] = $value;
+                        break;
+                    case 'to':
+                        array_push($parametersToSQL, "sold_on < :$key");
+                        $bindParameter[$key] = $value;
+                        break;
+                    case 'country':
+                        array_push($parametersToSQL, "destination_country = :$key");
+                        $bindParameter[$key] = $value;
+                        break;
+                    case 'pid':
+                        array_push($parametersToSQL, "product_id = :$key");
+                        $bindParameter[$key] = $value;
+                        break;
+
+                    default:
+                        //Not recognized = skip to next key
+                        continue 2;
+                        break;
+                }
             }
         }
-        $query = $query . implode(" AND ", $parametersToSQL);
+
+        if (count($bindParameter) > 0) {
+            $query = $query . " WHERE ";
+            $query = $query . implode(" AND ", $parametersToSQL);
+            $stmt = $this->conn->prepare($query);
+            foreach ($bindParameter as $key => $value) {
+                $stmt->bindValue(":$key", "$value");
+            }
+        } else {
+            $stmt = $this->conn->prepare($query);
+        }
+        try {
+            $stmt->execute();
+        } catch (Exception $e) {
+            throw new CustomHttpException("Request malformed please retry. Follow The documentation if needed.", 400);
         }
 
-        $stmt = $this->conn->prepare($query);
-
-        foreach ($existingParameters as $key => $value){
-            $stmt->bindValue(":$key", "$value");
-        }
-
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }

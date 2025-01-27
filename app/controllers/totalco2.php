@@ -42,7 +42,11 @@ try {
             http_response_code(200);
             //Get all entries for "/totalco2"
             if (count($resource) == 0) {
-                $results = $uow::$totalCO2->getAll();
+                $results = $uow::$totalCO2->getTotal();
+                //Cast to int
+                if ($results) {
+                    $results['saved_co2'] = (int)$results['saved_co2'];
+                }
                 $response['data'] = $results;
             } else {
                 throw new CustomHttpException("Unsupported endpoint try '/totalco2'", 400);

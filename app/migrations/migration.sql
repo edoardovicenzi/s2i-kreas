@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Generation Time: Dec 30, 2024 at 03:49 PM
+-- Generation Time: Jan 27, 2025 at 01:28 PM
 -- Server version: 9.1.0
 -- PHP Version: 8.2.8
 
@@ -56,6 +56,31 @@ CREATE TABLE `tblProduct` (
   `name` varchar(250) NOT NULL,
   `saved_co2` int NOT NULL COMMENT 'in grams'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `viewOrderProducts`
+-- (See below for the actual view)
+--
+CREATE TABLE `viewOrderProducts` (
+`order_id` int
+,`product_id` int
+,`product_name` varchar(250)
+,`quantity` int
+,`saved_co2` int
+,`destination_country` varchar(250)
+,`sold_on` datetime
+);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `viewOrderProducts`
+--
+DROP TABLE IF EXISTS `viewOrderProducts`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`kreas`@`%` SQL SECURITY DEFINER VIEW `viewOrderProducts`  AS SELECT `tblOrderProducts`.`order_id` AS `order_id`, `tblProduct`.`id` AS `product_id`, `tblProduct`.`name` AS `product_name`, `tblOrderProducts`.`quantity` AS `quantity`, `tblProduct`.`saved_co2` AS `saved_co2`, `tblOrder`.`destination_country` AS `destination_country`, `tblOrder`.`sold_on` AS `sold_on` FROM ((`tblOrderProducts` left join `tblProduct` on((`tblOrderProducts`.`product_id` = `tblProduct`.`id`))) left join `tblOrder` on((`tblOrderProducts`.`order_id` = `tblOrder`.`id`))) ;
 
 --
 -- Indexes for dumped tables
