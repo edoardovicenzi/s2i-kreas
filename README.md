@@ -30,6 +30,7 @@ There are 2 ways to make this work:
 ---
 
 ## API Documentation
+You can also view the documentation on the [wiki](https://github.com/edoardovicenzi/s2i-kreas/wiki) page.
 After the service is running you can start using the API. Here is a reference for each and every supported endpoint.
 
 Accessing not existing endpoints or not existing resources will yield a status code 404. A `message` property will be return for additional human-readable context on the error.
