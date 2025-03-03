@@ -262,6 +262,7 @@ This endpoint is responsible for CRUD operations on the orders. It will always r
 }
 ```
 This is a complete overview of the properties:
+
 | Property Name | Type | Notes |
 | -| -| -|
 | order_id | Integer |  |
