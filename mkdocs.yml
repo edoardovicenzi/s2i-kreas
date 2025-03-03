@@ -1,0 +1,4 @@
+site_name: Kreas
+site_url: https://edoardovicenzi.github.io/s2i-kreas
+theme:
+  name: material
